@@ -680,6 +680,15 @@ def handler(job):
                             )
                             execution_done = True
                             break
+                    elif message.get("type") == "progress":
+                        # Relay ComfyUI's per-step progress so the backend can render a
+                        # step count by polling /status. Guarded to this job's prompt.
+                        data = message.get("data", {})
+                        if data.get("prompt_id") in (None, prompt_id):
+                            runpod.serverless.progress_update(
+                                job,
+                                {"value": data.get("value"), "max": data.get("max"), "node": data.get("node")},
+                            )
                     elif message.get("type") == "execution_error":
                         data = message.get("data", {})
                         if data.get("prompt_id") == prompt_id:
