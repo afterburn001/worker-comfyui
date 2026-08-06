@@ -12,6 +12,8 @@
 
 This project allows you to run ComfyUI workflows as a serverless API endpoint on the RunPod platform. Submit workflows via API calls and receive generated images as base64 strings or S3 URLs.
 
+> **Afterburn fork.** This fork ships **model-free** and reads all models from an attached RunPod **network volume** rather than baking a model into the image. It also relays ComfyUI's per-step **progress** events via `runpod.serverless.progress_update()`, so a client can render a live step count by polling `/status`.
+
 ## Table of Contents
 
 - [Quickstart](#quickstart)
